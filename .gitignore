@@ -1,0 +1,8 @@
+*.apk
+*.png
+tools/
+gen/
+obj/
+classes.dex
+*.pem
+*.pk8
