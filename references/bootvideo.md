@@ -93,6 +93,16 @@ adb logcat -d | grep -E "use bootvideo|container not support|Stop play finished"
 - **音频** 加一条静音 AAC，避免某些固件因无音轨判为格式异常
 - **首帧** 建议纯黑，与开机黑屏衔接自然
 
+## 字体倾斜：用旋转，别用仿射斜切
+
+做"斜体"时如果用 `Image.transform` 做 shear，字形右上角会被裁掉一块
+（输出画布宽度算不准，且超出部分直接丢失）。
+正确做法是 **`img.rotate(-8, expand=True)`** —— 整字旋转 8°，
+`expand=True` 会自动扩大画布，**保证笔画一个都不丢**。
+
+App 内同理：`TextView.setRotation(-8f)`，比 `paint.setTextSkewX()` 安全
+（skew 只影响绘制、不影响测量，右侧会被 TextView 自身宽度裁掉）。
+
 ## 回滚
 
 ```bash
